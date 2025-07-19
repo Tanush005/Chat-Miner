@@ -88,8 +88,37 @@ TOGETHER_API_KEY = "e1eae2a0ac9d5686959df2c117dd839be0663ccc63d136d119bccd975a13
 #         return response.json()['output']['choices'][0]['text']
 #     except Exception as e:
 #         return "❌ Error generating summary. Please try again."
+# def summarize_chat_with_together(chat_text):
+#     prompt = f"""Summarize this WhatsApp chat:\n\n{chat_text}\n\nSummary:"""
+
+#     response = requests.post(
+#         "https://api.together.xyz/inference",
+#         headers={
+#             "Authorization": f"Bearer {TOGETHER_API_KEY}",
+#             "Content-Type": "application/json"
+#         },
+#         json={
+#             "model": "mistralai/Mistral-7B-Instruct-v0.1",  # ✅ This works!
+#             "prompt": prompt,
+#             "max_tokens": 300,
+#             "temperature": 0.7,
+#             "top_p": 0.95,
+#             "top_k": 50
+#         }
+#     )
+
+#     try:
+#         return response.json()['output']['choices'][0]['text']
+#     except Exception as e:
+#         print("API failed:", response.status_code, response.text)
+#         return "❌ Could not generate summary. Please try again."
 def summarize_chat_with_together(chat_text):
-    prompt = f"""Summarize this WhatsApp chat:\n\n{chat_text}\n\nSummary:"""
+    prompt = f"""You are an AI assistant. Summarize the following WhatsApp chat between friends into clear bullet points or short sentences capturing the main topics, decisions, and any emotional tone:
+
+Chat:
+{chat_text}
+
+Summary:"""
 
     response = requests.post(
         "https://api.together.xyz/inference",
@@ -98,11 +127,11 @@ def summarize_chat_with_together(chat_text):
             "Content-Type": "application/json"
         },
         json={
-            "model": "mistralai/Mistral-7B-Instruct-v0.1",  # ✅ This works!
+            "model": "mistralai/Mistral-7B-Instruct-v0.1",
             "prompt": prompt,
             "max_tokens": 300,
             "temperature": 0.7,
-            "top_p": 0.95,
+            "top_p": 0.9,
             "top_k": 50
         }
     )
@@ -110,8 +139,8 @@ def summarize_chat_with_together(chat_text):
     try:
         return response.json()['output']['choices'][0]['text']
     except Exception as e:
-        print("API failed:", response.status_code, response.text)
-        return "❌ Could not generate summary. Please try again."
+        print("Error from Together API:", response.status_code, response.text)
+        return "❌ Could not generate summary."
 
 
 
