@@ -59,87 +59,42 @@ st.markdown("""
 # Together.ai Chat Summarizer Function
 TOGETHER_API_KEY = "e1eae2a0ac9d5686959df2c117dd839be0663ccc63d136d119bccd975a131ba4"  # Replace with your key
 
-# def summarize_chat_with_together(chat_text):
-#     prompt = f"""You are a smart assistant. Summarize the following WhatsApp conversation:\n\n{chat_text}\n\nSummary:"""
-#     print("⏳ Sending request to Together API...")
-#     print(f"Prompt length: {len(chat_text)}")
-#     response = requests.post(
-#         "https://api.together.xyz/inference",
-#         headers={
-#             "Authorization": f"Bearer {TOGETHER_API_KEY}",
-#             "Content-Type": "application/json"
-#         },
-#         json={
-#             "model": "mistralai/Mixtral-8x7B-Instruct-v0.1",
-#             "prompt": prompt,
-#             "max_tokens": 300,
-#             "temperature": 0.7,
-#             "stop": None,
-#             "top_p": 0.95,
-#             "top_k": 50
-#         }
-#     )
-#     print("✅ Got response from API:")
-#     print(response.status_code)
-#     print(response.text)
 
-
-#     try:
-#         return response.json()['output']['choices'][0]['text']
-#     except Exception as e:
-#         return "❌ Error generating summary. Please try again."
-# def summarize_chat_with_together(chat_text):
-#     prompt = f"""Summarize this WhatsApp chat:\n\n{chat_text}\n\nSummary:"""
-
-#     response = requests.post(
-#         "https://api.together.xyz/inference",
-#         headers={
-#             "Authorization": f"Bearer {TOGETHER_API_KEY}",
-#             "Content-Type": "application/json"
-#         },
-#         json={
-#             "model": "mistralai/Mistral-7B-Instruct-v0.1",  # ✅ This works!
-#             "prompt": prompt,
-#             "max_tokens": 300,
-#             "temperature": 0.7,
-#             "top_p": 0.95,
-#             "top_k": 50
-#         }
-#     )
-
-#     try:
-#         return response.json()['output']['choices'][0]['text']
-#     except Exception as e:
-#         print("API failed:", response.status_code, response.text)
-#         return "❌ Could not generate summary. Please try again."
 def summarize_chat_with_together(chat_text):
-    prompt = f"""You are an AI assistant. Summarize the following WhatsApp chat between friends into clear bullet points or short sentences capturing the main topics, decisions, and any emotional tone:
+    import streamlit as st
+    prompt = f"""You are an AI assistant chatbot . Summarize the following WhatsApp chat between friends into clear bullet points or short sentences capturing the main topics, decisions, and any emotional tone:
 
 Chat:
 {chat_text}
 
 Summary:"""
 
-    response = requests.post(
-        "https://api.together.xyz/inference",
-        headers={
-            "Authorization": f"Bearer {TOGETHER_API_KEY}",
-            "Content-Type": "application/json"
-        },
-        json={
-            "model": "mistralai/Mistral-7B-Instruct-v0.1",
-            "prompt": prompt,
-            "max_tokens": 300,
-            "temperature": 0.7,
-            "top_p": 0.9,
-            "top_k": 50
-        }
-    )
+    st.write("🔍 [DEBUG] Prompt length:", len(prompt))
+    st.write("🔍 [DEBUG] First 500 chars of prompt:", prompt[:500])
 
     try:
-        return response.json()['output']['choices'][0]['text']
+        response = requests.post(
+            "https://api.together.xyz/inference",
+            headers={
+                "Authorization": f"Bearer {TOGETHER_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "mistralai/Mistral-7B-Instruct-v0.1",
+                "prompt": prompt,
+                "max_tokens": 300,
+                "temperature": 0.7,
+                "top_p": 0.9,
+                "top_k": 50
+            }
+        )
+        st.write("🔍 [DEBUG] API called, status code:", response.status_code)
+        st.write("🔍 [DEBUG] API response text:", response.text[:500])
+        output = response.json()
+        st.write("🔍 [DEBUG] API response JSON:", output)
+        return output['output']['choices'][0]['text']
     except Exception as e:
-        print("Error from Together API:", response.status_code, response.text)
+        st.write("❌ [DEBUG] Error from Together API:", response.status_code if 'response' in locals() else None, str(e))
         return "❌ Could not generate summary."
 
 
@@ -286,10 +241,12 @@ def main():
             st.markdown("## 🧠 AI Chat Summary")
             if st.button("📋 Generate Summary with AI"):
                 with st.spinner("Summarizing conversation..."):
-                    # Filter df for selected user
                     chat_df = df if selected_user == "Overall" else df[df['user'] == selected_user]
+                    st.write("🔍 [DEBUG] chat_df shape:", chat_df.shape)
+                    st.write("🔍 [DEBUG] First 5 rows of chat_df:", chat_df.head())
                     full_chat = "\n".join(chat_df.apply(lambda row: f"{row['user']}: {row['message']}", axis=1))
-                    summary = summarize_chat_with_together(full_chat[:15000])  # Truncate if chat is long
+                    st.write("🔍 [DEBUG] First 500 chars of full_chat:", full_chat[:500])
+                    summary = summarize_chat_with_together(full_chat[:15000])
                     st.success("Summary generated successfully!")
                     st.markdown("### 📝 Summary:")
                     st.write(summary)
