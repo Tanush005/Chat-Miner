@@ -181,10 +181,6 @@ def main():
     st.title("🔍 Chat Analyser ")
     st.markdown("### Unlock the secrets of your WhatsApp conversations")
 
-    # # Sidebar with a modern look
-    # st.sidebar.image("https://via.placeholder.com/150", width=200)
-    # st.sidebar.markdown("## 🔍 Conversation Analyzer")
-
     # File Upload
     uploaded_file = st.sidebar.file_uploader("📤 Upload Chat Export")
 
@@ -290,12 +286,13 @@ def main():
             st.markdown("## 🧠 AI Chat Summary")
             if st.button("📋 Generate Summary with AI"):
                 with st.spinner("Summarizing conversation..."):
-                     
-                     full_chat = "\n".join(df.apply(lambda row: f"{row['user']}: {row['message']}", axis=1))
-                     summary = summarize_chat_with_together(full_chat[:15000])  # Truncate if chat is long
-                     st.success("Summary generated successfully!")
-                     st.markdown("### 📝 Summary:")
-                     st.write(summary)
+                    # Filter df for selected user
+                    chat_df = df if selected_user == "Overall" else df[df['user'] == selected_user]
+                    full_chat = "\n".join(chat_df.apply(lambda row: f"{row['user']}: {row['message']}", axis=1))
+                    summary = summarize_chat_with_together(full_chat[:15000])  # Truncate if chat is long
+                    st.success("Summary generated successfully!")
+                    st.markdown("### 📝 Summary:")
+                    st.write(summary)
 
 
             # Word Cloud
