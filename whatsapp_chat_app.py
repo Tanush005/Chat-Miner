@@ -290,7 +290,8 @@ def main():
             st.markdown("## 🧠 AI Chat Summary")
             if st.button("📋 Generate Summary with AI"):
                 with st.spinner("Summarizing conversation..."):
-                     full_chat = "\n".join(df['user'] + ": " + df['message'])
+                     
+                     full_chat = "\n".join(df.apply(lambda row: f"{row['user']}: {row['message']}", axis=1))
                      summary = summarize_chat_with_together(full_chat[:15000])  # Truncate if chat is long
                      st.success("Summary generated successfully!")
                      st.markdown("### 📝 Summary:")
