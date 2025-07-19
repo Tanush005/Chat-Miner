@@ -61,7 +61,8 @@ TOGETHER_API_KEY = "e1eae2a0ac9d5686959df2c117dd839be0663ccc63d136d119bccd975a13
 
 def summarize_chat_with_together(chat_text):
     prompt = f"""You are a smart assistant. Summarize the following WhatsApp conversation:\n\n{chat_text}\n\nSummary:"""
-
+    print("⏳ Sending request to Together API...")
+    print(f"Prompt length: {len(chat_text)}")
     response = requests.post(
         "https://api.together.xyz/inference",
         headers={
@@ -78,6 +79,7 @@ def summarize_chat_with_together(chat_text):
             "top_k": 50
         }
     )
+    print("✅ Got response from API:")
     print(response.status_code)
     print(response.text)
 
