@@ -1,10 +1,8 @@
+
 streamlit
 pandas
-matplotlib
-seaborn
 plotly
 wordcloud
-emoji
-Pillow
-urlextract
-requests
+pillow
+pyarrow
+whoosh
