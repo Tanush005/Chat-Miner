@@ -1,7 +1,22 @@
 ChatMiner: A Production-Grade WhatsApp Chat Analysis Platform
 An end-to-end data application engineered to perform high-speed, interactive analysis on large, unstructured WhatsApp chat histories. Deployed as a live web app on Streamlit Cloud.
 
+<img width="2877" height="1027" alt="Screenshot 2025-07-22 200426" src="https://github.com/user-attachments/assets/66c005e0-aca4-473c-96e1-5d4b3342045a" />
+
+
+
+
+<img width="2253" height="996" alt="Screenshot 2025-07-22 200450" src="https://github.com/user-attachments/assets/1b8e9d44-0e17-4dc3-a2c3-304b3c5835c3" />
+
+
+
+
 <img width="2823" height="1529" alt="Screenshot 2025-07-22 200521" src="https://github.com/user-attachments/assets/203709fd-9a8b-4b67-9c72-936807b55d2a" />
+
+
+
+
+
 
 🎯 The Problem
 WhatsApp chats are a rich source of personal data, but they are notoriously difficult to analyze. Exported chat files are unstructured, and loading a large history with hundreds of thousands of messages into a standard script is slow and inefficient. Furthermore, finding specific information within these massive text files is nearly impossible with basic search tools.
