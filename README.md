@@ -1,4 +1,4 @@
-#ChatMiner: A Production-Grade WhatsApp Chat Analysis Platform
+#ChatMiner
 
 An end-to-end data application engineered to perform high-speed, interactive analysis on large, unstructured WhatsApp chat histories. Deployed as a live web app on Streamlit Cloud.
 
@@ -16,7 +16,6 @@ An end-to-end data application engineered to perform high-speed, interactive ana
 🌟 The Problem
 
 WhatsApp chats are a rich source of personal data, but notoriously difficult to analyze. Exported chat files are unstructured and inefficient to process. Searching large histories is painful with basic tools.
-
 ChatMiner solves this with a scalable, fast, and intelligent system for interactive, deep analysis.
 
 🚀 Key Engineering Features
@@ -44,7 +43,6 @@ Impact: Turns raw chat logs into a queryable, filterable database.
 The application's architecture is divided into two main processes:
 
 ✨ Data Loading and Caching Pipeline
-
 File Upload: A user uploads their chat.txt file.
 Hashing: A unique hash is created based on the file content.
 Cache Check:
@@ -52,7 +50,6 @@ Cache Hit: If hash exists, the Parquet file is loaded instantly.
 Cache Miss:
 ETL script processes the file.
 Structured data is saved as Parquet using the file hash.
-
 Display: Data is visualized through the interactive dashboard.
 
 🔍 Search Engine Flow
@@ -80,21 +77,17 @@ Whoosh
 📆 Local Installation & Setup
 
 Clone the Repository
-
 git clone https://github.com/your-username/chatminer.git
 cd chatminer
 
 Create and Activate a Virtual Environment
-
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 
 Install Dependencies
-
 pip install -r requirements.txt
 
 Run the Application
-
 streamlit run app.py
 
 🔮 Future Enhancements
