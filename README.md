@@ -24,25 +24,19 @@ ChatMiner solves this with a scalable, fast, and intelligent system for interact
 High-Performance Caching Pipeline
 
 Problem: Re-processing files every time is expensive and slow.
-
 Solution: Files are hashed and stored as Parquet. If the same file is uploaded again, it's loaded from cache instantly.
-
 Impact: Over 95% reduction in load time for returning users.
 
 Extensible OOP Architecture
 
 Problem: Monolithic scripts are hard to maintain.
-
 Solution: Built a modular, class-based system with plug-and-play analyzers.
-
 Impact: Easy addition of features without breaking existing code.
 
 Advanced Information Retrieval System
 
 Problem: Ctrl+F isn't powerful enough.
-
 Solution: A full-text search engine built using Whoosh, supporting keyword, user, and date filters.
-
 Impact: Turns raw chat logs into a queryable, filterable database.
 
 🏫 System & Data Flow Architecture
@@ -52,17 +46,11 @@ The application's architecture is divided into two main processes:
 ✨ Data Loading and Caching Pipeline
 
 File Upload: A user uploads their chat.txt file.
-
 Hashing: A unique hash is created based on the file content.
-
 Cache Check:
-
 Cache Hit: If hash exists, the Parquet file is loaded instantly.
-
 Cache Miss:
-
 ETL script processes the file.
-
 Structured data is saved as Parquet using the file hash.
 
 Display: Data is visualized through the interactive dashboard.
@@ -70,11 +58,8 @@ Display: Data is visualized through the interactive dashboard.
 🔍 Search Engine Flow
 
 Indexing: After ETL, data is indexed using Whoosh.
-
 User Query: A user enters a search term.
-
 Query Engine: Applies filters and retrieves messages from the index.
-
 Display: Relevant results shown in the dashboard.
 
 
@@ -115,10 +100,7 @@ streamlit run app.py
 🔮 Future Enhancements
 
 Async Data Processing: Use Celery or Redis to process extremely large files in the background.
-
 NLP Analysis: Add Hugging Face models for sentiment analysis, NER, topic modeling.
-
 Database Integration: Switch from file-based cache to PostgreSQL or MongoDB for better multi-user support.
-
 Containerization: Dockerize for consistent deployment and scaling.
 
